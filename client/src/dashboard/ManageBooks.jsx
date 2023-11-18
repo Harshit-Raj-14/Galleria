@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "flowbite-react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const ManageBooks = () => {
   const [allBooks, setAllBooks] = useState([]);
@@ -13,7 +13,16 @@ const ManageBooks = () => {
   //delete items
   const handleDelete = (id) => {
     console.log(id);
-  }
+    fetch(`http://localhost:5000/art/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert("Artwork deleted successfully!");
+        //setAllBooks(data);
+        location.reload();
+      });
+  };
 
   return (
     <div className="px-4 my-12">
@@ -39,14 +48,19 @@ const ManageBooks = () => {
               <Table.Cell>{book.authorName}</Table.Cell>
               <Table.Cell>{book.category}</Table.Cell>
               <Table.Cell>
-              {/* edit manage */}
+                {/* edit manage */}
                 <Link
                   to={`/admin/dashboard/edit-arts/${book._id}`}
                   className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mr-5"
                 >
                   Edit
                 </Link>
-                <button onClick={() => handleDelete(book._id)} className="bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600">Delete</button>
+                <button
+                  onClick={() => handleDelete(book._id)}
+                  className="bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600"
+                >
+                  Delete
+                </button>
               </Table.Cell>
             </Table.Row>
           </Table.Body>
