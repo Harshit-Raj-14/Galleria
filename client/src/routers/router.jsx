@@ -10,6 +10,10 @@ import Dashboard from "../dashboard/Dashboard";
 import UploadBook from "../dashboard/UploadBook";
 import ManageBooks from "../dashboard/ManageBooks";
 import EditBooks from "../dashboard/EditBooks";
+import Signup from "../components/Signup";
+import Login from "../components/Login";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Logout from "../components/Logout";
 
   const router = createBrowserRouter([
     {
@@ -46,7 +50,7 @@ import EditBooks from "../dashboard/EditBooks";
       children: [
         {
           path: "/admin/dashboard",
-          element: <Dashboard />
+          element: <PrivateRoute><Dashboard/></PrivateRoute>
         },
         {
           path: "/admin/dashboard/upload",
@@ -62,6 +66,18 @@ import EditBooks from "../dashboard/EditBooks";
           loader: ({params}) => fetch(`http://localhost:5000/art/${params.id}`)
         }
       ]
+    },
+    {
+      path: "sign-up",
+      element: <Signup />
+    },
+    {
+      path: "login",
+      element: <Login />
+    },
+    {
+      path: "logout",
+      element: <Logout/>
     }
   ]);
 
